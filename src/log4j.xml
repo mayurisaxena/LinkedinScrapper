@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+	<appender name="rolling" class="org.apache.log4j.DailyRollingFileAppender">
+		
+		<param name="file" value="/var/log/linkedinScraper/linkedinScraper.log" />
+		
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%5p] [%X{userId}] (%d{dd MMM yyyy HH:mm:ss:SSS}) (%t) (%c:%M:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="async" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="512" />
+		<param name="LocationInfo" value="true" />
+		<appender-ref ref="rolling" />
+	</appender>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="async" />
+	</root>
+
+</log4j:configuration>
